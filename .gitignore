@@ -1,0 +1,16 @@
+# Python
+*.pyc
+__pycache__/
+
+# Environment Variables
+.env
+
+# Azure Specific
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS Files
+.DS_Store
+Thumbs.db
