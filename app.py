@@ -212,7 +212,7 @@ def process_audio(audio, source_lang, target_lang):
     """
     try:
         if 'wav' not in audio and 'mp3' not in audio:
-            raise ValueError("Invalid audio file format. Only 'wav' and 'mp3' formats are supported.")
+            raise ValueError("Invalid audio file format. Only 'wav' and 'mp3' formats are supported..")
     
         transcript = transcribe_audio(audio, language_code=SOURCE_LANGS[source_lang])
         if "Error" in transcript or "canceled" in transcript or "No speech" in transcript:
