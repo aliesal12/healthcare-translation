@@ -224,23 +224,19 @@ def process_audio(audio, source_lang, target_lang):
     
         transcript = transcribe_audio(audio, language_code=SOURCE_LANGS[source_lang])
         if "Error" in transcript or "canceled" in transcript or "No speech" in transcript:
-            raise Exception(f"transcribe_audio_error: {transcript}")
-            #raise Exception("Audio processing failed: Please check the audio file for errors or unsupported content.")
+            raise Exception("Audio processing failed: Please check the audio file for errors or unsupported content.")
         
         corrected_transcript = enhance_transcription(transcript, "transcription")
         if corrected_transcript.startswith("Error"):
-            raise Exception(f"Enhance_transcription error: {corrected_transcript}")
-            #raise Exception("Failed to enhance transcription")
+            raise Exception("Failed to enhance transcription")
         
         translated_text = translate_text(corrected_transcript, target_language=TARGET_LANGS[target_lang])
         if "Error" in translated_text:
-            raise Exception(f"translate_text error: {translated_text}")
-            #raise Exception("Failed to translate your sentence")
+            raise Exception("Failed to translate your sentence")
         
         corrected_translation = enhance_transcription(translated_text, "translation")
         if corrected_translation.startswith("Error"):
-            raise Exception(f"enhance_translation error: {corrected_translation}")
-            #raise Exception("Failed to enhance translation")
+            raise Exception("Failed to enhance translation")
         
         translated_audio_bytes = text_to_speech(
             corrected_translation, 
@@ -248,13 +244,11 @@ def process_audio(audio, source_lang, target_lang):
             voice=VOICES[target_lang]
         )
         if isinstance(translated_audio_bytes, str) and translated_audio_bytes.startswith("Error"):
-            print(f"AUDIO Generation Error: {translated_audio_bytes}")
             return corrected_transcript, corrected_translation, "Error Generating Audio"
         
         return corrected_transcript, corrected_translation, translated_audio_bytes
     
     except ValueError as e:
-        # Return error message in place of outputs
         return str(e), None, None
     
     except Exception as e:
@@ -289,5 +283,4 @@ app = gr.mount_gradio_app(app, iface, path="/")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 7860))
-    print(f"PORT --> {port}")
     uvicorn.run(app, host="0.0.0.0", port=port)
