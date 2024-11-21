@@ -32,7 +32,7 @@ The application is built using a combination of Python-based frameworks and serv
 - **Gradio**: Provides an interactive user interface for users to interact with the application.
 - **Azure Cognitive Services**: Utilized for speech recognition and text-to-speech functionalities.
 - **OpenAI API**: Employed for enhancing transcription accuracy and simplifying medical terms.
-- **Render.com**: Platform used for deploying the web application.
+- **Azure**: Platform used for deploying the web application.
 
 ## Setup and Installation
 
