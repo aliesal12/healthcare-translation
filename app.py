@@ -8,6 +8,8 @@ import tempfile
 from dotenv import load_dotenv
 import time
 import threading
+from fastapi import FastAPI
+import uvicorn
 
 load_dotenv()
 
@@ -282,6 +284,10 @@ iface = gr.Interface(
     allow_flagging="never"
 )
 
+app = FastAPI()
+app = gr.mount_gradio_app(app, iface, path="/")
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 7860))
-    iface.launch(server_name="0.0.0.0", server_port=port)
+    print(f"PORT --> {port}")
+    uvicorn.run(app, host="0.0.0.0", port=port)
