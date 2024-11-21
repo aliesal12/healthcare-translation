@@ -211,21 +211,24 @@ def process_audio(audio, source_lang, target_lang):
         tuple: (Original Transcript, Translated Transcript, Translated Audio Bytes or Error Messages)
     """
     try:
+        if 'wav' not in audio and 'mp3' not in audio:
+            raise ValueError("Invalid audio file format. Only 'wav' and 'mp3' formats are supported.")
+    
         transcript = transcribe_audio(audio, language_code=SOURCE_LANGS[source_lang])
         if "Error" in transcript or "canceled" in transcript or "No speech" in transcript:
-            return transcript, "N/A", None
+            raise Exception("Audio processing failed: Please check the audio file for errors or unsupported content.")
         
         corrected_transcript = enhance_transcription(transcript, "transcription")
         if corrected_transcript.startswith("Error"):
-            return transcript, corrected_transcript, None
+            raise Exception("Failed to enhance transcription")
         
         translated_text = translate_text(corrected_transcript, target_language=TARGET_LANGS[target_lang])
         if "Error" in translated_text:
-            return corrected_transcript, translated_text, None
+            raise Exception("Failed to translate your sentence")
         
         corrected_translation = enhance_transcription(translated_text, "translation")
         if corrected_translation.startswith("Error"):
-            return corrected_transcript, translated_text, None
+            raise Exception("Failed to enhance translation")
         
         translated_audio_bytes = text_to_speech(
             corrected_translation, 
@@ -233,9 +236,17 @@ def process_audio(audio, source_lang, target_lang):
             voice=VOICES[target_lang]
         )
         if isinstance(translated_audio_bytes, str) and translated_audio_bytes.startswith("Error"):
-            return corrected_transcript, corrected_translation, None
+            return corrected_transcript, corrected_translation, "Error Generating Audio"
         
         return corrected_transcript, corrected_translation, translated_audio_bytes
+    
+    except ValueError as e:
+        # Return error message in place of outputs
+        return str(e), None, None
+    
+    except Exception as e:
+        return str(e), None, None
+        
     finally:
         if os.path.exists(audio):
             try:
