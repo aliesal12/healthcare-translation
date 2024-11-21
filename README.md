@@ -240,25 +240,24 @@ Deployment: The application is served using Uvicorn on the specified port.
 
 ## Deployment
 
-The application is deployed on Render.com, providing a live link accessible to users. Deployment steps include:
+The application is deployed on Azure, providing a live link accessible to users. Deployment steps include:
 
 ### Push Code to GitHub
 - **Ensure the latest code is pushed to the GitHub repository.**
 
-### Connect Repository to Render.com
-1. **Log in to Render.com.**
+### Connect Repository to Azure
+1. **Log in to portal.azure.com.**
 2. **Create a new Web Service.**
 3. **Connect your GitHub repository.**
 
 ### Configure Build and Run Commands
-- **Build Command:** `pip install -r requirements.txt`
-- **Start Command:** `python app.py`
+- **Start Command:** `uvicorn app:app --host localhost --port 8000`
 
 ### Set Environment Variables
-- **Add all necessary environment variables in the Render.com dashboard under the service's settings.**
+- **Add all necessary environment variables on Azure.**
 
 ### Deploy
-- **Render.com will handle the deployment process, providing a live URL upon successful deployment.**
+- **Azure will handle the deployment process, providing a live URL upon successful deployment.**
 
 ## Security and Data Privacy
 
@@ -266,7 +265,7 @@ Given the sensitive nature of healthcare data, the application incorporates basi
 
 - **Environment Variables:** Sensitive API keys and configurations are stored securely using environment variables, preventing exposure in the codebase.
 - **Temporary File Storage:** Translated audio files are stored temporarily and deleted after 5 minutes to minimize data retention.
-- **HTTPS Deployment:** Ensure the deployment platform (Render.com) uses HTTPS to encrypt data in transit.
+- **HTTPS Deployment:** Ensure the deployment platform (Azure.com) uses HTTPS to encrypt data in transit.
 - **Input Validation:** The application validates audio file formats and handles errors gracefully to prevent malicious inputs.
 
 ## Dependencies
@@ -290,7 +289,7 @@ The application relies on several Python libraries and external services:
 - **OpenAI API:** Enhances transcription and translation accuracy.
 - **Azure Speech Services:** Provides speech-to-text and text-to-speech functionalities.
 - **Azure Translator:** Facilitates text translation between languages.
-- **Render.com:** Hosts and deploys the web application.
+- **Microsoft Azure:** Hosts and deploys the web application.
 
 **Ensure all dependencies are listed in the `requirements.txt` file for seamless installation.**
 
