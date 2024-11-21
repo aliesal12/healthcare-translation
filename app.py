@@ -50,6 +50,11 @@ def cleanup_old_files():
     current_time = time.time()
     folder = "translated_files"
 
+    if os.path.exists('translated_files'):
+        pass
+    else:    
+        os.makedirs('translated_files')
+
     for file_to_check in os.listdir(folder):
         file_path = os.path.join(folder, file_to_check)
         if os.path.exists(file_path):
