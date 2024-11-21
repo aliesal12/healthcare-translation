@@ -32,7 +32,7 @@ The application is built using a combination of Python-based frameworks and serv
 - **Gradio**: Provides an interactive user interface for users to interact with the application.
 - **Azure Cognitive Services**: Utilized for speech recognition and text-to-speech functionalities.
 - **OpenAI API**: Employed for enhancing transcription accuracy and simplifying medical terms.
-- **Azure**: Platform used for deploying the web application.
+- **Render.com**: Platform used for deploying the web application.
 
 ## Setup and Installation
 
@@ -240,13 +240,13 @@ Deployment: The application is served using Uvicorn on the specified port.
 
 ## Deployment
 
-The application is deployed on Azure, providing a live link accessible to users. Deployment steps include:
+The application is deployed on Render.com, providing a live link accessible to users. Deployment steps include:
 
 ### Push Code to GitHub
 - **Ensure the latest code is pushed to the GitHub repository.**
 
 ### Connect Repository to Azure
-1. **Log in to portal.azure.com.**
+1. **Log in to render.com.**
 2. **Create a new Web Service.**
 3. **Connect your GitHub repository.**
 
@@ -289,7 +289,7 @@ The application relies on several Python libraries and external services:
 - **OpenAI API:** Enhances transcription and translation accuracy.
 - **Azure Speech Services:** Provides speech-to-text and text-to-speech functionalities.
 - **Azure Translator:** Facilitates text translation between languages.
-- **Microsoft Azure:** Hosts and deploys the web application.
+- **Render.com:** Hosts and deploys the web application.
 
 **Ensure all dependencies are listed in the `requirements.txt` file for seamless installation.**
 
