@@ -230,31 +230,43 @@ def process_audio(audio, source_lang, target_lang):
             temp=audio
             audio = all_uploads[max(all_uploads.keys())]
 
+        print(f"starting now")
         transcript = transcribe_audio(audio, language_code=SOURCE_LANGS[source_lang])
         if "Error" in transcript or "canceled" in transcript or "No speech" in transcript:
             audio=temp
             raise Exception("Audio processing failed: Please check the audio file for errors or unsupported content.")
         
+        print(f"transcript --> {transcript}")
+
         corrected_transcript = enhance_transcription(transcript, "transcription")
         if corrected_transcript.startswith("Error"):
             audio=temp
             raise Exception("Failed to enhance transcription")
+        
+        print(f"corrected_transcript --> {corrected_transcript}")
         
         translated_text = translate_text(corrected_transcript, target_language=TARGET_LANGS[target_lang])
         if "Error" in translated_text:
             audio=temp
             raise Exception("Failed to translate your sentence")
         
+        print(f"translated_text --> {translated_text}")
+
         corrected_translation = enhance_transcription(translated_text, "translation")
         if corrected_translation.startswith("Error"):
             audio=temp
             raise Exception("Failed to enhance translation")
         
+        print(f"corrected_translation --> {corrected_translation}")
+
         translated_audio_bytes = text_to_speech(
             corrected_translation, 
             language_code=TARGET_LANGS[target_lang].upper(), 
             voice=VOICES[target_lang]
         )
+
+        print(f"translated_audio_bytes --> {translated_audio_bytes}")
+        
         audio=temp
         if isinstance(translated_audio_bytes, str) and translated_audio_bytes.startswith("Error"):
             return corrected_transcript, corrected_translation, "Error Generating Audio"
